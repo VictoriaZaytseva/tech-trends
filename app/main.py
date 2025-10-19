@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app import db, errors
+from app import db, errors, scheduler
 from app.api import router
 from sqlalchemy.exc import SQLAlchemyError
 from requests.exceptions import RequestException

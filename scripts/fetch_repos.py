@@ -3,18 +3,24 @@ import datetime
 from sqlalchemy.orm import Session
 from app.db import SessionLocal, Repo, init_db
 from app.errors import logger
+from app import settings
 from sqlalchemy.exc import SQLAlchemyError
 from requests.exceptions import RequestException
 
+url = settings.github_api_url
+
 def fetch_trending():
-    url = "https://api.github.com/search/repositories"
+    headers = {}
+    if settings.token:
+        headers["Authorization"] = f"Bearer {settings.token}"
+    print(settings.token)    
     params = {
         "q": "created:>2025-01-01",
         "sort": "stars",
         "order": "desc",
         "per_page": 20
     }
-    r = requests.get(url, params=params)
+    r = requests.get(url, params=params, headers=headers)
     r.raise_for_status()
     return r.json()["items"]
 

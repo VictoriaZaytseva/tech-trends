@@ -3,8 +3,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 from app.errors import logger
 from app.db import SessionLocal
-from app.models import Repo
-from scripts.fetch_repos import fetch_github_repos, save_to_db  # reuse your existing logic
+from app.db import Repo
+from scripts.fetch_repos import fetch_trending, save_to_db  # reuse your existing logic
 
 def update_github_data():
     logger.info("⏳ Starting scheduled GitHub data fetch...")

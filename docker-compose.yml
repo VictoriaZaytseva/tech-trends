@@ -18,7 +18,9 @@ services:
       dockerfile: Dockerfile
     container_name: tech-trends-app
     env_file:
-      - .env
+      - .env.docker
+    environment:
+      - ENV_FILE=.env.docker
     ports:
       - "8000:8000"
     depends_on:

@@ -6,3 +6,6 @@ requests
 pydantic
 alembic
 python-dotenv
+httpx
+pydantic-settings
+APScheduler==3.10.4
