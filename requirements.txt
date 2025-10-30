@@ -9,3 +9,4 @@ python-dotenv
 httpx
 pydantic-settings
 APScheduler==3.10.4
+alembic

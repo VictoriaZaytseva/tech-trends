@@ -1,6 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from sqlalchemy import ForeignKey, create_engine, Column, Integer, String, DateTime, func
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 import os
 from app import settings
 
@@ -21,6 +21,20 @@ class Repo(Base):
     forks = Column(Integer)
     html_url = Column(String)
     fetched_at = Column(DateTime)
+
+    stats = relationship("RepoStats", back_populates="repos")
+
+class RepoStats(Base):
+    __tablename__ = "repo_stats"
+
+    id = Column(Integer, primary_key=True, index=True)
+    repo_id = Column(Integer, ForeignKey("repos.id"))
+    stars = Column(Integer)
+    forks = Column(Integer)
+    open_issues = Column(Integer)
+    recorded_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    repository = relationship("Repository", back_populates="stats")
 
 def init_db():
     Base.metadata.create_all(bind=engine)
