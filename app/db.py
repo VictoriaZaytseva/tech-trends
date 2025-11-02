@@ -22,7 +22,7 @@ class Repo(Base):
     html_url = Column(String)
     fetched_at = Column(DateTime)
 
-    stats = relationship("RepoStats", back_populates="repos")
+    stats = relationship("RepoStats", back_populates="repository")
 
 class RepoStats(Base):
     __tablename__ = "repo_stats"
@@ -34,7 +34,7 @@ class RepoStats(Base):
     open_issues = Column(Integer)
     recorded_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    repository = relationship("Repository", back_populates="stats")
+    repository = relationship("Repo", back_populates="stats")
 
 def init_db():
     Base.metadata.create_all(bind=engine)
